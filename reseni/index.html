@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Průzkumník sluneční soustavy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== Vrstva hvězd – ÚLOHA 4 ===== -->
+  <div class="hvezdy" aria-hidden="true">
+    <span class="hvezda" style="--x: 5%;  --y: 8%;  --r: 3px; --d: 0s"></span>
+    <span class="hvezda" style="--x: 12%; --y: 30%; --r: 2px; --d: 0.4s"></span>
+    <span class="hvezda" style="--x: 18%; --y: 66%; --r: 3px; --d: 1.1s"></span>
+    <span class="hvezda" style="--x: 24%; --y: 14%; --r: 2px; --d: 0.7s"></span>
+    <span class="hvezda" style="--x: 31%; --y: 48%; --r: 4px; --d: 1.6s"></span>
+    <span class="hvezda" style="--x: 38%; --y: 80%; --r: 2px; --d: 0.2s"></span>
+    <span class="hvezda" style="--x: 44%; --y: 22%; --r: 3px; --d: 1.3s"></span>
+    <span class="hvezda" style="--x: 52%; --y: 60%; --r: 2px; --d: 0.9s"></span>
+    <span class="hvezda" style="--x: 58%; --y: 10%; --r: 3px; --d: 1.8s"></span>
+    <span class="hvezda" style="--x: 64%; --y: 38%; --r: 2px; --d: 0.5s"></span>
+    <span class="hvezda" style="--x: 70%; --y: 72%; --r: 4px; --d: 1.4s"></span>
+    <span class="hvezda" style="--x: 76%; --y: 18%; --r: 2px; --d: 0.1s"></span>
+    <span class="hvezda" style="--x: 82%; --y: 52%; --r: 3px; --d: 1.0s"></span>
+    <span class="hvezda" style="--x: 88%; --y: 28%; --r: 2px; --d: 1.7s"></span>
+    <span class="hvezda" style="--x: 92%; --y: 68%; --r: 3px; --d: 0.6s"></span>
+    <span class="hvezda" style="--x: 96%; --y: 40%; --r: 2px; --d: 1.2s"></span>
+    <span class="hvezda" style="--x: 8%;  --y: 88%; --r: 2px; --d: 1.5s"></span>
+    <span class="hvezda" style="--x: 48%; --y: 92%; --r: 3px; --d: 0.3s"></span>
+  </div>
+
+  <!-- ===== Raketa – BONUSOVÁ ÚLOHA ===== -->
+  <div class="raketa" aria-hidden="true">🚀</div>
+
+  <div class="stranka">
+
+    <header class="hlavicka">
+      <h1>Průzkumník sluneční soustavy</h1>
+      <p>Interaktivní přehled planet zemského typu</p>
+    </header>
+
+    <!-- ===== Model soustavy – ÚLOHY 2 a 3 ===== -->
+    <section class="soustava" aria-label="Model sluneční soustavy">
+      <div class="slunce" aria-hidden="true"></div>
+
+      <div class="draha draha--merkur"><div class="obeh"><span class="telo"></span></div></div>
+      <div class="draha draha--venuse"><div class="obeh"><span class="telo"></span></div></div>
+      <div class="draha draha--zeme"><div class="obeh"><span class="telo"></span></div></div>
+      <div class="draha draha--mars"><div class="obeh"><span class="telo"></span></div></div>
+    </section>
+
+    <!-- ===== Karty planet – ÚLOHA 1 ===== -->
+    <section class="karty">
+
+      <article class="karta karta--merkur">
+        <div class="karta__kule" aria-hidden="true"></div>
+        <h2>Merkur</h2>
+        <p>Nejmenší planeta soustavy a zároveň ta nejblíže Slunci. Nemá atmosféru ani měsíce.</p>
+        <p class="karta__data">Oběh: 88 dní &middot; Průměr: 4 879 km</p>
+      </article>
+
+      <article class="karta karta--venuse">
+        <div class="karta__kule" aria-hidden="true"></div>
+        <h2>Venuše</h2>
+        <p>Nejteplejší planeta. Hustá atmosféra oxidu uhličitého drží teplotu nad 460 °C.</p>
+        <p class="karta__data">Oběh: 225 dní &middot; Průměr: 12 104 km</p>
+      </article>
+
+      <article class="karta karta--zeme">
+        <div class="karta__kule" aria-hidden="true"></div>
+        <h2>Země</h2>
+        <p>Jediná známá planeta s kapalnou vodou na povrchu a s potvrzeným životem.</p>
+        <p class="karta__data">Oběh: 365 dní &middot; Průměr: 12 742 km</p>
+      </article>
+
+      <article class="karta karta--mars">
+        <div class="karta__kule" aria-hidden="true"></div>
+        <h2>Mars</h2>
+        <p>Rudá planeta s největším vulkánem soustavy. Má dva malé měsíce.</p>
+        <p class="karta__data">Oběh: 687 dní &middot; Průměr: 6 779 km</p>
+      </article>
+
+    </section>
+
+    <footer class="paticka">Maturitní úloha &ndash; CSS transformace, přechody a animace</footer>
+
+  </div>
+
+</body>
+</html>

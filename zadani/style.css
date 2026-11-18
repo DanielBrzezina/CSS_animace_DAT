@@ -1,0 +1,207 @@
+/* ==========================================================================
+   ČÁST A – HOTOVÝ ZÁKLAD. TUTO ČÁST NEUPRAVUJ!
+   Obsahuje rozvržení, barvy a tvary. Chybí jen pohyb.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --pozadi:       #070b1c;
+  --pozadi-karta: rgba(255, 255, 255, .06);
+  --text:         #e8ecff;
+  --text-slaby:   #9aa6cc;
+  --akcent:       #ffd166;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 20% 0%, #15224d 0%, var(--pozadi) 55%);
+}
+
+.stranka { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 48px 20px 60px; }
+
+.hlavicka { text-align: center; margin-bottom: 24px; }
+.hlavicka h1 { margin: 0 0 8px; font-size: clamp(28px, 5vw, 44px); letter-spacing: .5px; }
+.hlavicka p  { margin: 0; color: var(--text-slaby); }
+
+.paticka { margin-top: 56px; text-align: center; font-size: 13px; color: #6a7596; }
+
+/* --- hvězdné pozadí (úloha 4) --- */
+.hvezdy { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.hvezda {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--r);
+  height: var(--r);
+  border-radius: 50%;
+  background: #fff;
+  opacity: .5;
+}
+
+/* --- raketa (bonus) --- */
+.raketa {
+  position: fixed;
+  left: -80px;
+  top: 16%;
+  z-index: 2;
+  font-size: 34px;
+  pointer-events: none;
+}
+
+/* --- model soustavy (úlohy 2 a 3) --- */
+.soustava { position: relative; height: 460px; display: grid; place-items: center; margin-bottom: 56px; }
+
+.slunce {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff3b0, #ffb703 60%, #fb8500);
+  box-shadow: 0 0 40px rgba(255, 183, 3, .5);
+}
+
+.draha {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--v);
+  height: var(--v);
+  margin: calc(var(--v) / -2) 0 0 calc(var(--v) / -2);
+  border: 1px dashed rgba(255, 255, 255, .12);
+  border-radius: 50%;
+}
+.draha--merkur { --v: 160px; }
+.draha--venuse { --v: 240px; }
+.draha--zeme   { --v: 330px; }
+.draha--mars   { --v: 420px; }
+
+/* .obeh je neviditelný obal přes celou oběžnou dráhu.
+   Planeta (.telo) je přilepená na jeho horním okraji -
+   když se .obeh otočí, planeta objede celou dráhu.      */
+.obeh { position: absolute; inset: 0; }
+
+.telo {
+  position: absolute;
+  top: calc(var(--r) / -2);
+  left: calc(50% - var(--r) / 2);
+  width: var(--r);
+  height: var(--r);
+  border-radius: 50%;
+  background: var(--barva);
+  box-shadow: 0 0 12px -2px var(--barva);
+}
+.draha--merkur .telo { --r: 12px; --barva: #b9a79a; }
+.draha--venuse .telo { --r: 18px; --barva: #e8c37a; }
+.draha--zeme   .telo { --r: 20px; --barva: #4f9ae0; }
+.draha--mars   .telo { --r: 16px; --barva: #d1603d; }
+
+/* --- karty planet (úloha 1) --- */
+.karty { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; }
+
+.karta {
+  padding: 26px 22px 22px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 18px;
+  background: var(--pozadi-karta);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+  text-align: center;
+  cursor: pointer;
+}
+.karta h2 { margin: 0 0 6px; font-size: 20px; }
+.karta p  { margin: 0; font-size: 14px; line-height: 1.5; color: var(--text-slaby); }
+.karta .karta__data { margin-top: 14px; font-size: 13px; color: var(--akcent); }
+
+.karta__kule {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, .55), transparent 45%),
+    linear-gradient(145deg, var(--barva1), var(--barva2));
+  box-shadow: inset -12px -10px 24px rgba(0, 0, 0, .45);
+}
+.karta--merkur .karta__kule { --barva1: #cbbfb4; --barva2: #6f655d; }
+.karta--venuse .karta__kule { --barva1: #f6d79a; --barva2: #b07d2a; }
+.karta--zeme   .karta__kule { --barva1: #7fc4ff; --barva2: #1b4f8a; }
+.karta--mars   .karta__kule { --barva1: #f09a74; --barva2: #8d3317; }
+
+
+/* ==========================================================================
+   ČÁST B – ZDE PRACUJ. Veškerý svůj kód piš do této části.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   ÚLOHA 1 (7 b) – PŘECHODY A TRANSFORMACE NA KARTÁCH PLANET
+   Po najetí myší na kartu (.karta):
+     a) karta se posune o 12 px nahoru a zvětší se na 105 %
+     b) stín karty zesílí na:  0 18px 38px rgba(0, 0, 0, .5)
+    !!!! otočení není vidět c) kulička planety uvnitř karty (.karta__kule) se otočí o 18°
+        a zvětší se na 112 %
+     d) všechny tyto změny jsou plynulé (ne skokové) - karta 0,35 s,
+        kulička 0,45 s, náběh ease-out
+   Pozor: přechod se píše do základního stavu prvku, ne do :hover.
+   -------------------------------------------------------------------------- */
+
+/* sem napiš řešení úlohy 1 */
+
+
+
+/* --------------------------------------------------------------------------
+   ÚLOHA 2 (6 b) – ANIMACE KLÍČOVÝCH SNÍMKŮ: OBĚH PLANET KOLEM SLUNCE
+   Vytvoř animaci klíčových snímků s názvem "obeh", která prvek otočí
+   z 0° na 360°, a přiřaď ji všem prvkům .obeh tak, aby:
+     - běžela stále dokola (nekonečně)
+     - měla rovnoměrnou rychlost (bez zpomalování na koncích)
+     - každá planeta měla jinou dobu oběhu:
+         Merkur 4 s, Venuše 7 s, Země 11 s, Mars 16 s
+   Doby oběhu řeš přes jednotlivé dráhy (.draha--merkur .obeh atd.),
+   samotnou animaci piš jen jednou.
+   -------------------------------------------------------------------------- */
+
+/* sem napiš řešení úlohy 2 */
+
+
+/* --------------------------------------------------------------------------
+   ÚLOHA 3 (5 b) – ANIMACE KLÍČOVÝCH SNÍMKŮ: PULZUJÍCÍ SLUNCE
+   Vytvoř animaci "puls" pro Slunce (.slunce), která:
+     - plynule mění velikost ze 100 % na 112 %
+     - zároveň mění vnější záři ze  0 0 40px rgba(255, 183, 3, .5)
+                                na  0 0 70px rgba(255, 183, 3, .85)
+     - trvá 3 s, běží nekonečně, zrychluje i zpomaluje (ease-in-out)
+     - po dokončení se přehraje pozpátku zpět (NEskáče na začátek)
+   Použij pouze dva klíčové snímky (from / to).
+   -------------------------------------------------------------------------- */
+
+/* sem napiš řešení úlohy 3 */
+
+
+/* --------------------------------------------------------------------------
+   ÚLOHA 4 (4 b) – ANIMACE KLÍČOVÝCH SNÍMKŮ: BLIKAJÍCÍ HVĚZDY
+   Vytvoř animaci "blikani" pro hvězdy (.hvezda):
+     - průhlednost se mění z 0.15 na 1
+     - velikost se mění ze 70 % na 110 %
+     - trvání 2 s, nekonečně, ease-in-out, přehrávání tam a zpět
+     - hvězdy nesmí blikat všechny současně! Každý prvek .hvezda má
+       v HTML připravenou vlastní proměnnou --d s hodnotou zpoždění
+       (např. style="--d: 1.1s"). Tuto proměnnou využij.
+   -------------------------------------------------------------------------- */
+
+/* sem napiš řešení úlohy 4 */
+
+/* --------------------------------------------------------------------------
+   BONUS (3 b) – RAKETA PŘELÉTÁ OBRAZOVKU
+   Rozhýbej raketu (.raketa) animací "prelet", která:
+     - ji přesune od levého okraje za pravý okraj obrazovky
+       (koncová vodorovná pozice: calc(100vw + 160px))
+     - v polovině cesty ji nadzvedne o 40 px výš
+     - celou dobu ji drží naklopenou o 12°
+     - trvá 9 s, rovnoměrně, nekonečně
+   Použij klíčové snímky 0 %, 50 % a 100 %.
+   -------------------------------------------------------------------------- */
+
+/* sem napiš řešení bonusu */
