@@ -36,6 +36,10 @@ a rozpohybuje ji pomocí CSS.
 
 - Žádné externí obrázky, fonty ani JS – planety i Slunce jsou CSS gradienty,
   raketa je emoji. Funguje offline a bez internetu.
+- Povrch planet (krátery Merkuru, pásy mraků Venuše, kontinenty Země, kaňon
+  a polární čepičky Marsu) je poskládaný z gradientů v pseudoprvku
+  `.karta__kule::before`. Je součástí části A a žák ho neupravuje – je tam
+  proto, aby na kuličce bylo vidět otočení o 18° z úlohy 1.
 - Vše běží v současných prohlížečích bez prefixů.
 - Rychlá kontrola: po doplnění části B musí planety obíhat Slunce, Slunce
   pulzovat, hvězdy blikat rozfázovaně a karty reagovat na `:hover`.

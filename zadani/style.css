@@ -116,19 +116,91 @@ body {
 .karta .karta__data { margin-top: 14px; font-size: 13px; color: var(--akcent); }
 
 .karta__kule {
+  position: relative;
+  overflow: hidden;              /* povrchové detaily se zarovnají do kruhu */
   width: 110px;
   height: 110px;
   margin: 0 auto 16px;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, .55), transparent 45%),
-    linear-gradient(145deg, var(--barva1), var(--barva2));
+  background: linear-gradient(145deg, var(--barva1), var(--barva2));
+}
+
+/* Povrch planety. Každá planeta má jiný (krátery, pásy mraků, kontinenty,
+   polární čepičky) - právě díky němu je na kuličce vidět otočení.        */
+.karta__kule::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+/* Osvětlení kuličky - odlesk vlevo nahoře a stín na odvrácené straně.
+   Leží nad povrchem, aby planeta vypadala jako koule.                 */
+.karta__kule::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%, rgba(255, 255, 255, .5), transparent 46%);
   box-shadow: inset -12px -10px 24px rgba(0, 0, 0, .45);
 }
+
 .karta--merkur .karta__kule { --barva1: #cbbfb4; --barva2: #6f655d; }
 .karta--venuse .karta__kule { --barva1: #f6d79a; --barva2: #b07d2a; }
 .karta--zeme   .karta__kule { --barva1: #7fc4ff; --barva2: #1b4f8a; }
 .karta--mars   .karta__kule { --barva1: #f09a74; --barva2: #8d3317; }
+
+/* Merkur - rozsetá pole kráterů (tmavé dno, světlý okraj). */
+.karta--merkur .karta__kule::before {
+  background:
+    radial-gradient(circle at 31% 63%, rgba(0, 0, 0, .34) 0 11%, rgba(255, 255, 255, .34) 12% 15%, transparent 16%),
+    radial-gradient(circle at 64% 29%, rgba(0, 0, 0, .30) 0 7%,  rgba(255, 255, 255, .30) 8% 11%, transparent 12%),
+    radial-gradient(circle at 73% 69%, rgba(0, 0, 0, .28) 0 5%,  rgba(255, 255, 255, .26) 6% 8%,  transparent 9%),
+    radial-gradient(circle at 46% 20%, rgba(0, 0, 0, .26) 0 4%,  rgba(255, 255, 255, .24) 5% 7%,  transparent 8%),
+    radial-gradient(circle at 19% 33%, rgba(0, 0, 0, .22) 0 4%,  transparent 5%),
+    radial-gradient(circle at 50% 86%, rgba(0, 0, 0, .22) 0 5%,  transparent 6%),
+    radial-gradient(circle at 86% 46%, rgba(0, 0, 0, .20) 0 3%,  transparent 4%),
+    radial-gradient(40% 30% at 20% 82%, rgba(255, 255, 255, .14), transparent 70%);
+}
+
+/* Venuše - husté, šikmo vedené pásy mraků. */
+.karta--venuse .karta__kule::before {
+  background:
+    radial-gradient(70% 20% at 32% 22%, rgba(255, 255, 255, .45), transparent 72%),
+    radial-gradient(58% 16% at 70% 50%, rgba(255, 248, 225, .38), transparent 72%),
+    radial-gradient(80% 18% at 38% 76%, rgba(150,  95,  20, .35), transparent 72%),
+    repeating-linear-gradient(118deg,
+      rgba(255, 255, 255, .11) 0 6px,
+      rgba(130,  80,  15, .10) 6px 13px,
+      rgba(255, 255, 255, .05) 13px 19px);
+}
+
+/* Země - oceány, kontinenty, mraky a polární čepičky. */
+.karta--zeme .karta__kule::before {
+  background:
+    radial-gradient(58% 17% at 50% 0%,   rgba(255, 255, 255, .92), transparent 72%),
+    radial-gradient(52% 15% at 50% 100%, rgba(255, 255, 255, .85), transparent 72%),
+    radial-gradient(42% 10% at 68% 44%, rgba(255, 255, 255, .40), transparent 70%),
+    radial-gradient(30% 26% at 33% 39%, #4f9a52 0 62%, transparent 74%),
+    radial-gradient(21% 17% at 57% 25%, #6aa84f 0 62%, transparent 76%),
+    radial-gradient(26% 29% at 63% 67%, #3f7f45 0 62%, transparent 75%),
+    radial-gradient(13% 11% at 25% 71%, #5c9a4a 0 62%, transparent 76%);
+}
+
+/* Mars - polární čepičky, tmavé oblasti, vulkán a kaňon Valles Marineris. */
+.karta--mars .karta__kule::before {
+  background:
+    radial-gradient(50% 14% at 50% 0%,   rgba(255, 255, 255, .88), transparent 72%),
+    radial-gradient(40% 11% at 50% 100%, rgba(255, 255, 255, .72), transparent 72%),
+    radial-gradient(10%  9% at 57% 29%, rgba(255, 224, 186, .40), transparent 72%),
+    radial-gradient(28% 20% at 29% 43%, rgba( 90,  30, 10, .50), transparent 72%),
+    radial-gradient(22% 15% at 67% 61%, rgba( 70,  25, 10, .45), transparent 72%),
+    linear-gradient(100deg,
+      transparent 42%,
+      rgba(60, 20, 8, .30) 46%,
+      rgba(60, 20, 8, .30) 49%,
+      transparent 53%);
+}
 
 
 /* ==========================================================================
@@ -140,7 +212,7 @@ body {
    Po najetí myší na kartu (.karta):
      a) karta se posune o 12 px nahoru a zvětší se na 105 %
      b) stín karty zesílí na:  0 18px 38px rgba(0, 0, 0, .5)
-    !!!! otočení není vidět c) kulička planety uvnitř karty (.karta__kule) se otočí o 18°
+     c) kulička planety uvnitř karty (.karta__kule) se otočí o 18°
         a zvětší se na 112 %
      d) všechny tyto změny jsou plynulé (ne skokové) - karta 0,35 s,
         kulička 0,45 s, náběh ease-out
